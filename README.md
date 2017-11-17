@@ -7,17 +7,15 @@
 - docker
 - docker-compose
 
-### Init
-
-```sh
-$ docker-compose build
-```
-
 ### Start
 
 ```sh
-$ docker-compose up -d
+$ c dc start
+$ docker exec -it tm2_app bash
+$ python
 ```
+
+- **ctrl+d** : プロンプト終了
 
 ### Stop
 
@@ -26,3 +24,11 @@ $ docker-compose stop
 ```
 
 ---
+
+## Usage
+
+### Run
+
+```sh
+$ bin/run
+```
