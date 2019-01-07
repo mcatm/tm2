@@ -8,3 +8,6 @@ services:
       - ./data:/data
     ports:
       - 80:8888
+    working_dir: /var/scripts
+    volumes:
+      - ./scripts:/var/scripts

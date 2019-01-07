@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# ---------------------------
+# 
+#    Run
+# 
+# ---------------------------
+
+if [ $1 ]
+then
+  echo $1.pyを実行
+  file=$1
+else
+  echo 実行ファイルを入力してください:
+  ls scripts
+  read file
+fi
+docker exec tm2_app python ${file}.py
