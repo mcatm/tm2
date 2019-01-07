@@ -1,7 +1,10 @@
 version: '2'
 services:
   app:
-    image: tensorflow/tensorflow
+    build: ./container/tensorflow
     container_name: tm2_app
+    volumes:
+      - ./notebooks:/notebooks
+      - ./data:/data
     ports:
       - 80:8888

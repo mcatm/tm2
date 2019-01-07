@@ -1,0 +1,94 @@
+#!/bin/sh
+
+base_image_ver=1.0
+dockercompose_file=docker-compose.yml
+
+# ---------------------------
+#
+#    Git
+#
+# ---------------------------
+
+if [ $1 = push ]
+then
+
+  echo "Git: カレントブランチをPushします"
+  git symbolic-ref --short HEAD | xargs git push origin
+
+fi
+
+# ---------------------------
+#
+#    Docker
+#
+# ---------------------------
+
+if [ $1 = build ]
+then
+  echo Dockerイメージを生成
+  docker-compose -f ${dockercompose_file} build
+elif [ $1 = start ]
+then
+  echo Dockerコンテナを起動
+  docker-compose -f ${dockercompose_file} up -d
+elif [ $1 = restart ]
+then
+  echo Dockerコンテナを再起動
+  docker-compose -f ${dockercompose_file} restart
+elif [ $1 = stop ]
+then
+  echo Dockerコンテナを停止
+  docker-compose -f ${dockercompose_file} stop
+elif [ $1 = ssh ]
+then
+  if [ $2 ]
+  then
+    echo Dockerコンテナ$3にログイン
+    container=$2
+  else
+    docker-compose -f ${dockercompose_file} ps
+    echo コンテナ名を入力してください :
+    read container
+  fi
+  docker exec -it tm2_${container} bash
+elif [ $1 = ps ]
+then
+  echo Dockerステータス
+  docker ps
+else
+  echo Exit
+fi
+
+# ---------------------------
+#
+#    CircleCI
+#
+# ---------------------------
+
+if [ $1 = ci ]
+then
+
+  if [ $2 = validate ]
+  then
+    echo CircleCI: validate
+    circleci config validate
+  else
+    echo CircleCI: execute
+    circleci local execute
+  fi
+
+fi
+
+# ---------------------------
+#
+#    Capistrano
+#
+# ---------------------------
+
+if [ $1 = cap ]
+then
+
+  cd capistrano
+  cap $2 $3
+
+fi
