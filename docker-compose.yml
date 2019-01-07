@@ -6,8 +6,6 @@ services:
     volumes:
       - ./notebooks:/notebooks
       - ./data:/data
+      - ./scripts:/var/scripts
     ports:
       - 80:8888
-    working_dir: /var/scripts
-    volumes:
-      - ./scripts:/var/scripts
