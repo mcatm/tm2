@@ -8,4 +8,4 @@ services:
       - ./data:/data
       - ./scripts:/var/scripts
     ports:
-      - 80:8888
+      - 8888:8888
